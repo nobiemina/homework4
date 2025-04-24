@@ -1,0 +1,107 @@
+ /* 
+ Name: Ojonobi Emina
+ File: homework3.css
+ Date Created: 13th April 2025
+ Date Updated: 13th April 2025
+ Purpose: Style sheet for MIS 3371 homework3
+ */
+
+ body{
+    background-image: url(../Backgorund.png);
+    background-color: black;
+    }
+#header{
+  background-color:rgb(0, 0, 0);
+  color:white;
+  font-family: Verdana, sans-serif;
+  font-size: 30px;
+  }
+
+hr {
+    border: none;
+    height: 6px;
+    background-color: #000000;
+  }
+
+table.form, tr.form, td.form {
+  margin-left: auto;
+  margin-right: auto;
+  size: 20%;
+  font-family: Verdana, sans-serif;
+  font-size: 16px;
+  background-color:white;
+  padding: 60px;
+  color:#6e1a69;
+}
+th {
+  font-size: 23px;
+}
+
+ tr.form, td.form, input {
+  border: 1px solid #6e1a69;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 5px;
+  
+}
+
+input[type="text"], [type="date"], [type="email"], [type="password"]{
+    height: 40px;
+    box-align: center;
+    width: 300px;
+    font-family: Verdana, sans-serif;
+    font-size: 15px;
+    background-color:white;
+    border-radius: 5px;
+
+}
+
+#middleinit{
+  width: 30px;
+}
+
+#city{
+  width: 70px;
+}
+
+#zip {
+  width: 150px;
+}
+
+input[type="submit"]{
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    width: 100px;
+    color: #fff;
+    background-color:#6e1a69;
+    border-radius: 10px;
+}
+
+input[type="reset"]{
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    width: 100px;
+    color: #6e1a69;
+    background-color:white;
+    border-radius: 10px;
+}
+
+input[type="Button"]{
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    width: 100px;
+    color: #6e1a69;
+    background-color:white;
+    border-radius: 10px;
+}
+
+#footer{
+  background-color:rgb(0, 0, 0);
+  color:white;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+  padding: 25px;
+  }
