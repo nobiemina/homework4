@@ -1,0 +1,118 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title> Patient Registration Form I Medical Connect</title>
+
+        <link rel="stylesheet" href="homework3.css">
+        <script src="homework3.js"></script>
+
+    </head>
+
+    <body>
+        <div id="header"> 
+            <table width="100%">
+                <tr>
+                    <td>
+                        <img 
+                            id="logo" 
+                            src="Logo.png" 
+                            alt="Medical Connect"
+                            width="60%"
+                        >
+                    </td>
+                     <td valign="middle" width="30%" align="center">Patient Registration Form</td>
+                    <td valign="bottom" align="right" width="30%">Today's date: <span id="current-date"></span>
+                        <script>
+                          window.onload = function() {
+                              setup();
+                              const currentDate = new Date();
+                              const dateString = currentDate.toLocaleDateString();
+                              document.getElementById('current-date').textContent = dateString;
+                          };
+                      </script>
+
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div id="body">
+<form name="registrationForm" 
+    id="registrationForm" 
+
+ <table class="form">
+    <tr class="form">
+        <th class="form" colspan="2">Personal Information</th>
+    </tr>
+        <tr> <td>&nbsp;</td> </tr>
+    <tr class="form">
+        <td> Full Name* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input 
+                    type="text"
+                    size="25"
+                    maxlength="60" 
+                    id="fullname" 
+                    name="fullname" 
+                    pattern="[A-Za-z-' ~]{2,}"
+                    title="Minumum 2 characters; only letters, spaces, &quot-&quot and ' allowed."
+                    required
+                    onfocus="validatefirstname()"
+                    onblur="validatefirstname()"
+                    oninvalid="this.setCustomValidity('Required Field')"
+                    placeholder="Full Name"
+            >
+      </tr>
+     <td>&nbsp</td>
+
+      <tr class="form">
+        <td>
+            Email Address* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="email" 
+                    size="40" 
+                    maxlength="40" 
+                    id="email" 
+                    name="email" 
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,20}$"
+                    placeholder="Email Address"
+                    required
+            >
+            <span id="email">  
+        </td>
+    </tr>
+    <tr> <td>&nbsp;</td> </tr>
+
+    <tr class="form">
+        <td>
+            Phone Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="text" 
+                    size="13" 
+                    maxlength="13" 
+                    id="phone"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+                    oninvalid="this.setCustomValidity('Please input phone number in '000-000-0000'')"
+                    name="phone" 
+                    placeholder="Phone Number"
+            >
+            <span id="phone">  
+        </td>
+    </tr>
+
+    <tr> <td>&nbsp;</td> </tr>
+
+    <tr class="form">
+        <td>What questions do you have? </td>
+        <td>
+        <textarea 
+            rows="4" 
+            cols="56" 
+            required
+            placeholder="Be as detailed as possible">
+        </textarea>
+        </td>
+    </tr>
+
+</form>
+                        
+  
