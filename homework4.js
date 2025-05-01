@@ -65,63 +65,116 @@ function review() {
 }
 
 
-function saveNameToCookies() {
-  let error_flag = 0;
-
-  let firstname = document.getElementById("firstname").value;
-  let mi = document.getElementById("mi").value;
-  let lastname = document.getElementById("lastname").value;
-
-  // Validate firstname
-  if (firstname.length < 2) {
-    document.getElementById("fname_message").innerHTML = "First name needs to contain at least 2 characters";
-    error_flag = 1;
-  } else {
-    if (/^[a-zA-Z2-5'-]+$/.test(firstname)) {
-      document.getElementById("fname_message").innerHTML = "";
-    } else {
-      document.getElementById("fname_message").innerHTML = "Invalid characters in First name.";
-      error_flag = 1;
-    }
-  }
-
-  // Validate middle initial (optional but if entered, must be 1 letter)
-  if (mi.length > 0 && !/^[a-zA-Z]$/.test(mi)) {
-    document.getElementById("mi_message").innerHTML = "Middle initial must be a single letter.";
-    error_flag = 1;
-  } else {
-    document.getElementById("mi_message").innerHTML = "";
-  }
-
-  // Validate lastname
-  if (lastname.length < 2) {
-    document.getElementById("lname_message").innerHTML = "Last name needs to contain at least 2 characters";
-    error_flag = 1;
-  } else {
-    if (/^[a-zA-Z2-5'-]+$/.test(lastname)) {
-      document.getElementById("lname_message").innerHTML = "";
-    } else {
-      document.getElementById("lname_message").innerHTML = "Invalid characters in Last name.";
-      error_flag = 1;
-    }
-  }
-
-  // Save to cookies if no errors
-  if (error_flag == 0) {
-    setCookie("firstname", firstname, 7);
-    setCookie("mi", mi, 7);
-    setCookie("lastname", lastname, 7);
-    alert("Name saved in cookies!");
-  }
-}
-
+// Cookie helper functions
 function setCookie(name, cvalue, expiryDays) {
   var day = new Date();
   day.setTime(day.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
   var expires = "expires=" + day.toUTCString();
-  document.cookie = name + "=" + encodeURIComponent(cvalue) + ";" + expires + ";path=/";
+  document.cookie = name + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+function getCookie(name) {
+  var cookieName = name + "=";
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.indexOf(cookieName) == 0) {
+      return cookie.substring(cookieName.length, cookie.length);
+    }
+  }
+  return "";
+}
+
+function deleteAllCookies() {
+  document.cookie.split(";").forEach(function (cookie) {
+    let eqPos = cookie.indexOf("=");
+    let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;";
+  });
+}
+
+// Validation and Cookie Save Functions
+let error_flag = 0;
+
+function validatefirstname() {
+  let x = document.getElementById("firstname").value;
+  if (x.length < 2) {
+    document.getElementById("fname_message").innerHTML = "First name needs to contain at least 2 characters";
+    error_flag = 1;
+  } else {
+    if (/^[a-zA-Z2-5'-]+$/.test(x)) {
+      document.getElementById("fname_message").innerHTML = "";
+      setCookie("firstName", x, 30);  // Save cookie
+    } else {
+      document.getElementById("fname_message").innerHTML = "Invalid characters in Field.";
+      error_flag = 1;
+    }
+  }
+}
+
+function validatemidinitial() {
+  let x = document.getElementById("mi").value;
+  if (x.length === 0) {
+    document.getElementById("mi_message").innerHTML = "";
+  } else if (x.length === 1 && /^[a-zA-Z]$/.test(x)) {
+    document.getElementById("mi_message").innerHTML = "";
+    setCookie("middleInitial", x, 30);  // Save cookie
+  } else {
+    document.getElementById("mi_message").innerHTML = "Middle initial must be 1 letter.";
+    error_flag = 1;
+  }
+}
+
+function validatelastname() {
+  let x = document.getElementById("lastname").value;
+  if (x.length < 2) {
+    document.getElementById("lname_message").innerHTML = "Last name needs to contain at least 2 characters";
+    error_flag = 1;
+  } else {
+    if (/^[a-zA-Z2-5'-]+$/.test(x)) {
+      document.getElementById("lname_message").innerHTML = "";
+      setCookie("lastName", x, 30);  // Save cookie
+    } else {
+      document.getElementById("lname_message").innerHTML = "Invalid characters in Field.";
+      error_flag = 1;
+    }
+  }
+}
+
+// Prefill cookies on load
+window.onload = function () {
+  let firstName = getCookie("firstName");
+  let mi = getCookie("middleInitial");
+  let lastName = getCookie("lastName");
+
+  if (firstName) document.getElementById("firstname").value = firstName;
+  if (mi) document.getElementById("mi").value = mi;
+  if (lastName) document.getElementById("lastname").value = lastName;
+
+  if (firstName) {
+    document.getElementById("welcome1").innerHTML = "Welcome back, " + firstName + "!<br>";
+    document.getElementById("welcome2").innerHTML = "<a href='#' id='new-user'>Not " + firstName + "? Click here to start a new form.</a>";
+
+    document.getElementById("new-user").addEventListener("click", function () {
+      deleteAllCookies();
+      location.reload();
+    });
+  }
+};
+
+// Remember Me checkbox handling
+document.getElementById("remember-me").addEventListener("change", function () {
+  const rememberMe = this.checked;
+  if (!rememberMe) {
+    deleteAllCookies();
+    console.log("All cookies deleted because 'Remember Me' is unchecked.");
+  } else {
+    validatefirstname();
+    validatemidinitial();
+    validatelastname();
+    console.log("Cookies saved because 'Remember Me' is checked.");
+  }
+});
 
 
 function validatedate() {
