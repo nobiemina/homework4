@@ -36,6 +36,7 @@ table.form, tr.form, td.form {
   padding: 60px;
   color:#6e1a69;
 }
+
 th {
   font-size: 23px;
 }
@@ -107,4 +108,7 @@ input[type="Button"]{
   font-family: 'Courier New', Courier, monospace;
   font-size: 20px;
   padding: 25px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
   }
