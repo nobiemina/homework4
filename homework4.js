@@ -65,49 +65,63 @@ function review() {
 }
 
 
-function validatefirstname() {
-  let x = document.getElementById("firstname").value;
-  if (x.length < 2) {
+function saveNameToCookies() {
+  let error_flag = 0;
+
+  let firstname = document.getElementById("firstname").value;
+  let mi = document.getElementById("mi").value;
+  let lastname = document.getElementById("lastname").value;
+
+  // Validate firstname
+  if (firstname.length < 2) {
     document.getElementById("fname_message").innerHTML = "First name needs to contain at least 2 characters";
     error_flag = 1;
   } else {
-    if (/^[a-zA-Z2-5'-]+$/.test(x)) {
+    if (/^[a-zA-Z2-5'-]+$/.test(firstname)) {
       document.getElementById("fname_message").innerHTML = "";
     } else {
-      document.getElementById("fname_message").innerHTML = "Invalid characters in Field.";
+      document.getElementById("fname_message").innerHTML = "Invalid characters in First name.";
       error_flag = 1;
     }
   }
-}
 
-
-function validateMI() {
-  let x = document.getElementById("middleinit").value;
-  if (x.length > 0) {
-    if (/^[a-zA-Z ]$/.test(x)) {
-      document.getElementById("mi_message").innerHTML = "";
-    } else {
-      document.getElementById("mi_message").innerHTML = "Invalid characters in Field.";
-      error_flag = 1;
-    }
-  }
-}
-
-
-function validatelastname() {
-  let x = document.getElementById("lastname").value;
-  if (x.length < 2) {
-    document.getElementById("lname_message").innerHTML = "Last name needs to contain at least 2 characters.";
+  // Validate middle initial (optional but if entered, must be 1 letter)
+  if (mi.length > 0 && !/^[a-zA-Z]$/.test(mi)) {
+    document.getElementById("mi_message").innerHTML = "Middle initial must be a single letter.";
     error_flag = 1;
   } else {
-    if (x.match(/^[a-zA-Z3-5'-]+$/)) {
+    document.getElementById("mi_message").innerHTML = "";
+  }
+
+  // Validate lastname
+  if (lastname.length < 2) {
+    document.getElementById("lname_message").innerHTML = "Last name needs to contain at least 2 characters";
+    error_flag = 1;
+  } else {
+    if (/^[a-zA-Z2-5'-]+$/.test(lastname)) {
       document.getElementById("lname_message").innerHTML = "";
     } else {
-      document.getElementById("lname_message").innerHTML = "Invalid characters in name.";
+      document.getElementById("lname_message").innerHTML = "Invalid characters in Last name.";
       error_flag = 1;
     }
   }
+
+  // Save to cookies if no errors
+  if (error_flag == 0) {
+    setCookie("firstname", firstname, 7);
+    setCookie("mi", mi, 7);
+    setCookie("lastname", lastname, 7);
+    alert("Name saved in cookies!");
+  }
 }
+
+function setCookie(name, cvalue, expiryDays) {
+  var day = new Date();
+  day.setTime(day.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
+  var expires = "expires=" + day.toUTCString();
+  document.cookie = name + "=" + encodeURIComponent(cvalue) + ";" + expires + ";path=/";
+}
+
 
 
 function validatedate() {
