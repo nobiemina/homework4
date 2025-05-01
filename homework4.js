@@ -2,7 +2,7 @@
  Name: Ojonobi Emina
  File: homework3.js
  Date Created: 30th April 2025
- Date Updated: 30th April 2025
+ Date Updated: 1st May 2025
  Purpose: Validate data on the fly from a form
 */
 
@@ -94,7 +94,6 @@ function deleteAllCookies() {
 }
 
 // Validation and Cookie Save Functions
-let error_flag = 0;
 
 function validatefirstname() {
   let x = document.getElementById("firstname").value;
@@ -141,8 +140,8 @@ function validatelastname() {
   }
 }
 
-// Prefill cookies on load
 window.onload = function () {
+  // Prefill cookies on load
   let firstName = getCookie("firstName");
   let mi = getCookie("middleInitial");
   let lastName = getCookie("lastName");
@@ -160,21 +159,24 @@ window.onload = function () {
       location.reload();
     });
   }
-};
-
+ 
 // Remember Me checkbox handling
-document.getElementById("remember-me").addEventListener("change", function () {
-  const rememberMe = this.checked;
-  if (!rememberMe) {
-    deleteAllCookies();
-    console.log("All cookies deleted because 'Remember Me' is unchecked.");
-  } else {
-    validatefirstname();
-    validatemidinitial();
-    validatelastname();
-    console.log("Cookies saved because 'Remember Me' is checked.");
+const rememberMeCheckbox = document.getElementById("remember-me");
+  if (rememberMeCheckbox) {
+    rememberMeCheckbox.addEventListener("change", function () {
+      const rememberMe = this.checked;
+      if (!rememberMe) {
+        deleteAllCookies();
+        console.log("All cookies deleted because 'Remember Me' is unchecked.");
+      } else {
+        validatefirstname();
+        validatemidinitial();
+        validatelastname();
+        console.log("Cookies saved because 'Remember Me' is checked.");
+      }
+    });
   }
-});
+};
 
 
 function validatedate() {
@@ -271,13 +273,14 @@ function validatecity() {
 
 function validatestate() {
   let z = document.getElementById("state").value;
-  if (z === " ") {
-    document.getElementById("state_message").innerHTML = "Please choose a state";
-    error_flag = 1;
+  if (z === "") {
+  document.getElementById("state_message").innerHTML = "Please choose a state";
+  error_flag = 1;
   } else {
-    document.getElementById("state_message").innerHTML = "";
+  document.getElementById("state_message").innerHTML = "";
   }
-}
+  }
+
 
 
 function passwordinput() {
@@ -313,10 +316,10 @@ function passwordinput() {
 
   passwordoutput = "";
   if (passwordinput.length < 8) {
-    passwordoutput = "Enter at least 8 characters";
-    error_flag = 1;
-  }
-  document.getElementById("password_message5").innerHTML = passwordoutput;
+  passwordoutput = "Password must be at least 8 characters long";
+  error_flag = 1;
+}
+document.getElementById("password_message5").innerHTML = passwordoutput;
 }
 
 
